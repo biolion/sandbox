@@ -1,0 +1,11 @@
+*.Rhistory
+*.RData
+*.pper
+*.Rproj
+*.Rproj.user*
+
+*generated\results*
+*generated\timings*
+
+*generated/results*
+*generated/timings*
