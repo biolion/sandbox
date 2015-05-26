@@ -4,8 +4,8 @@
 *.Rproj
 *.Rproj.user*
 
-*generated\results*
-*generated\timings*
+*.ipynb_checkpoints/*
+*.ipynb_checkpoints\*
 
-*generated/results*
-*generated/timings*
+Thumbs.db
+

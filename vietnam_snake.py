@@ -29,7 +29,7 @@ import scipy.cluster.hierarchy as sch
 # <markdowncell>
 
 # ## Brute force approach
-# Calculate all permutations, and test for correct answer
+# Calculate all permutations, and examine answers
 
 # <codecell>
 
@@ -44,23 +44,44 @@ def get_answer(foo):
 
 # <codecell>
 
-# how many answers are intergers?
-print(sum([(get_answer(perm) % 1 == 0) for perm in itertools.permutations(np.arange(9) +1)]), "combinations result in integer answers")
+# calculate all results
+perms = [i for i in itertools.permutations(np.arange(9) +1)]
+results = [get_answer(perm) for perm in perms]
 
 # <codecell>
 
-# what is the distribution of all possible answers?
-np.histogram()
+# how many results are intergers?
+print(sum([(result % 1 == 0) for result in results]), " / ", len(results), " combinations result in integer answers")
 
 # <codecell>
 
-answers = [perm for perm in itertools.permutations(np.arange(9) +1) if get_answer(perm) == answer]
+# what is the distribution of all possible results?
+#hist, bin_edges = np.histogram(results, bins=50, density=False)
+plt.hist(results, bins=50)
+plt.title("All possible results")
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+plt.show()
+# integer results
+plt.hist([result for result in results if result % 1 == 0], bins=50)
+plt.title("Integer results")
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+plt.show()
+
+# <markdowncell>
+
+# Examine results which give right answer
+
+# <codecell>
+
+answers = [perm for (perm, result) in zip(perms, results) if result == answer]
 
 # <codecell>
 
 # how many possible answers?
-print(len(answers), " / ", len([i for i in itertools.permutations(np.arange(9) +1)]))
-print((len(answers) / len([i for i in itertools.permutations(np.arange(9) +1)]))* 100, "%")
+print(len(answers), " / ", len(perms))
+print((len(answers) / len(perms))* 100, "%")
 
 # <codecell>
 
@@ -76,7 +97,7 @@ for (i, permi) in enumerate(answers):
 
 # <codecell>
 
-# spot check a "similar" pair
+# spot check results
 for i in range(len(answers[0])):
     print(sum(answer_mat == i), " answers equal to ", i)
 for element in [(i,j) for i in range(len(answer_mat)) for j in range(len(answer_mat))]:
@@ -134,9 +155,11 @@ pylab.colorbar(im, cax=axcolor)
 
 # Display and save figure.
 fig.show()
-fig.savefig('dendrogram.png')
 
 # <codecell>
 
 # any regions of the equation that seems to go together, manhattan distance on "path"?
+
+# <codecell>
+
 
